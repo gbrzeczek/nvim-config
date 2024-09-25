@@ -76,6 +76,6 @@ nnoremap <silent>    <A-c> <Cmd>BufferClose<CR>
 nnoremap <silent>    <A-s-c> <Cmd>BufferRestore<CR>
 
 " Add language server: Angular, typescript
-lua require'lspconfig'.tsserver.setup{}
+lua require'lspconfig'.ts_ls.setup{}
 lua require'lspconfig'.angularls.setup{}
 
