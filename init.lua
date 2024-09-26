@@ -86,6 +86,12 @@ map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-S-c>', '<Cmd>BufferRestore<CR>', opts)
 
+vim.g.barbar_auto_setup = false
+
+require('barbar').setup {
+    maximum_length = 30,
+}
+
 -- Telescope config
 require('telescope').setup {
     defaults = {
@@ -139,6 +145,17 @@ local on_attach = function(client, bufnr)
   -- Diagnostics
   buf_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+
+  -- Inlay hints
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
+
+  vim.keymap.set('n', '<leader>th', function()
+    local current_buf = vim.api.nvim_get_current_buf()
+    local inlay_hint_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = current_buf })
+    vim.lsp.inlay_hint.enable(not inlay_hint_enabled, { bufnr = current_buf })
+  end, { buffer = bufnr, desc = "Toggle Inlay Hints" })
 end
 
 -- Language servers
@@ -152,12 +169,46 @@ require'lspconfig'.angularls.setup{
   on_new_config = function(new_config,new_root_dir)
     new_config.cmd = cmd
   end,
-  on_attach = on_attach
+  on_attach = on_attach,
+  settings = {
+        angular = {
+            inlayHints = {
+                parameterNames = true,
+                propertyDeclarationTypes = true,
+                functionLikeReturnTypes = true,
+                enumMemberValues = true,
+            },
+        },
+    },
 }
 
 require'lspconfig'.ts_ls.setup{
     capabilities = capabilities,
-    on_attach = on_attach
+    on_attach = on_attach,
+    settings = {
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+    },
 }
 
 -- Angular bindings
