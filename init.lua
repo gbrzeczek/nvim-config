@@ -42,6 +42,12 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 call plug#end()
 ]])
 
@@ -87,11 +93,39 @@ require('telescope').setup {
     }
 }
 
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+-- Code completions
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Language servers
 local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
 local ngProbeLocations = "%APPDATA%\\npm\\node_modules\\@angular\\language-server"
 local cmd = {"ngserver", "--stdio", "--tsProbeLocations", tsProbeLocations, "--ngProbeLocations", ngProbeLocations}
 require'lspconfig'.angularls.setup{
+  capabilities = capabilities,
   cmd = cmd,
   on_new_config = function(new_config,new_root_dir)
     new_config.cmd = cmd
