@@ -87,3 +87,15 @@ require('telescope').setup {
     }
 }
 
+-- Language servers
+local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
+local ngProbeLocations = "%APPDATA%\\npm\\node_modules\\@angular\\language-server"
+local cmd = {"ngserver", "--stdio", "--tsProbeLocations", tsProbeLocations, "--ngProbeLocations", ngProbeLocations}
+require'lspconfig'.angularls.setup{
+  cmd = cmd,
+  on_new_config = function(new_config,new_root_dir)
+    new_config.cmd = cmd
+  end,
+}
+require'lspconfig'.ts_ls.setup{}
+
