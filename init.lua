@@ -79,3 +79,11 @@ map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-S-c>', '<Cmd>BufferRestore<CR>', opts)
 
+-- Telescope config
+require('telescope').setup {
+    defaults = {
+        file_ignore_patterns = { 'node_modules', '.git' },
+        path_display = { 'truncate' }
+    }
+}
+
