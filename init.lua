@@ -48,6 +48,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'joeveiga/ng.nvim'
 call plug#end()
 ]])
 
@@ -146,4 +147,14 @@ require'lspconfig'.angularls.setup{
   on_attach = on_attach
 }
 require'lspconfig'.ts_ls.setup{}
+
+-- Angular bindings
+local opts = { noremap = true, silent = true }
+local ng = require("ng");
+vim.keymap.set("n", "<leader>gt", function()
+  ng.goto_template_for_component({ reuse_window = true })
+end, opts)
+vim.keymap.set("n", "<leader>gc", function()
+  ng.goto_component_with_template_file({ reuse_window = true })
+end, opts)
 
