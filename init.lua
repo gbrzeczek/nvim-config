@@ -120,6 +120,19 @@ cmp.setup({
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local opts = { noremap=true, silent=true }
+
+  -- Leader key mappings
+  buf_set_keymap('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<leader>fo', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
 -- Language servers
 local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
 local ngProbeLocations = "%APPDATA%\\npm\\node_modules\\@angular\\language-server"
@@ -130,6 +143,7 @@ require'lspconfig'.angularls.setup{
   on_new_config = function(new_config,new_root_dir)
     new_config.cmd = cmd
   end,
+  on_attach = on_attach
 }
 require'lspconfig'.ts_ls.setup{}
 
