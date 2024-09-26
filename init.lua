@@ -147,10 +147,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 
   -- Inlay hints
-  if client.server_capabilities.inlayHintProvider then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
-
   vim.keymap.set('n', '<leader>th', function()
     local current_buf = vim.api.nvim_get_current_buf()
     local inlay_hint_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = current_buf })
