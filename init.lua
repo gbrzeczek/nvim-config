@@ -119,7 +119,10 @@ cmp.setup({
   })
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -132,12 +135,17 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>fo', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  -- Diagnostics
+  buf_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 end
 
 -- Language servers
 local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
 local ngProbeLocations = "%APPDATA%\\npm\\node_modules\\@angular\\language-server"
 local cmd = {"ngserver", "--stdio", "--tsProbeLocations", tsProbeLocations, "--ngProbeLocations", ngProbeLocations}
+
 require'lspconfig'.angularls.setup{
   capabilities = capabilities,
   cmd = cmd,
@@ -146,7 +154,11 @@ require'lspconfig'.angularls.setup{
   end,
   on_attach = on_attach
 }
-require'lspconfig'.ts_ls.setup{}
+
+require'lspconfig'.ts_ls.setup{
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
 -- Angular bindings
 local opts = { noremap = true, silent = true }
