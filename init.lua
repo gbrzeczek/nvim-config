@@ -41,7 +41,6 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'romgrk/barbar.nvim'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -52,6 +51,7 @@ Plug 'joeveiga/ng.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 call plug#end()
 ]])
 
@@ -74,29 +74,26 @@ map('n', '<Leader>n', ':Neotree toggle<CR>', opts)
 -- Setup lualine
 require('lualine').setup {}
 
--- Barbar bindings
-map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
-map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
-map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
-map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
-map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
-map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
-map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
-map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
-map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
-map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
-map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
-map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
-map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
-map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
-map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
-map('n', '<A-S-c>', '<Cmd>BufferRestore<CR>', opts)
+-- Setup bufferline
+vim.opt.termguicolors = true
+require("bufferline").setup{}
 
-vim.g.barbar_auto_setup = false
-
-require('barbar').setup {
-    maximum_length = 30,
-}
+map('n', '<A-,>', '<Cmd>BufferLineCyclePrev<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferLineCycleNext<CR>', opts)
+map('n', '<A-<>', '<Cmd>BufferLineMovePrev<CR>', opts)
+map('n', '<A->>', '<Cmd>BufferLineMoveNext<CR>', opts)
+map('n', '<A-1>', '<Cmd>BufferLineGoToBuffer 1<CR>', opts)
+map('n', '<A-2>', '<Cmd>BufferLineGoToBuffer 2<CR>', opts)
+map('n', '<A-3>', '<Cmd>BufferLineGoToBuffer 3<CR>', opts)
+map('n', '<A-4>', '<Cmd>BufferLineGoToBuffer 4<CR>', opts)
+map('n', '<A-5>', '<Cmd>BufferLineGoToBuffer 5<CR>', opts)
+map('n', '<A-6>', '<Cmd>BufferLineGoToBuffer 6<CR>', opts)
+map('n', '<A-7>', '<Cmd>BufferLineGoToBuffer 7<CR>', opts)
+map('n', '<A-8>', '<Cmd>BufferLineGoToBuffer 8<CR>', opts)
+map('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<CR>', opts)
+map('n', '<A-0>', '<Cmd>BufferLinePick<CR>', opts)
+map('n', '<A-c>', '<Cmd>bdelete<CR>', opts)
+map('n', '<A-S-c>', '<Cmd>BufferLinePickClose<CR>', opts)
 
 -- Telescope config
 require('telescope').setup {
