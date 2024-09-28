@@ -50,6 +50,8 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'joeveiga/ng.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 ]])
 
@@ -68,6 +70,9 @@ map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
 
 -- Neotree binding
 map('n', '<Leader>n', ':Neotree toggle<CR>', opts)
+
+-- Setup lualine
+require('lualine').setup {}
 
 -- Barbar bindings
 map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
