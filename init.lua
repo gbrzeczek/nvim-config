@@ -52,6 +52,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+Plug 'sindrets/diffview.nvim'
 call plug#end()
 ]])
 
@@ -156,6 +157,12 @@ local on_attach = function(client, bufnr)
     vim.lsp.inlay_hint.enable(not inlay_hint_enabled, { bufnr = current_buf })
   end, { buffer = bufnr, desc = "Toggle Inlay Hints" })
 end
+
+
+-- Diffview shortcuts
+vim.api.nvim_set_keymap('n', '<leader>do', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dc', ':DiffviewClose<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dt', ':DiffviewToggleFiles<CR>', { noremap = true, silent = true })
 
 -- Language servers
 local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
