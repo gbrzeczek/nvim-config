@@ -167,6 +167,8 @@ vim.api.nvim_set_keymap('n', '<leader>dt', ':DiffviewToggleFiles<CR>', { noremap
 -- Language servers
 local tsProbeLocations = "%APPDATA%\\npm\\node_modules\\typescript\\lib"
 local ngProbeLocations = "%APPDATA%\\npm\\node_modules\\@angular\\language-server"
+local vueLanguageServerLocation = vim.fn.expand("$APPDATA\\npm\\node_modules\\@vue\\language-server")
+
 local cmd = {"ngserver", "--stdio", "--tsProbeLocations", tsProbeLocations, "--ngProbeLocations", ngProbeLocations}
 
 require'lspconfig'.angularls.setup{
@@ -187,6 +189,8 @@ require'lspconfig'.angularls.setup{
         },
     },
 }
+
+require'lspconfig'.volar.setup{}
 
 require'lspconfig'.ts_ls.setup{
     capabilities = capabilities,
@@ -215,6 +219,16 @@ require'lspconfig'.ts_ls.setup{
             },
         },
     },
+    init_options = {
+        plugins = {
+            {
+                name = "@vue/typescript-plugin",
+                location = vueLanguageServerLocation ,
+                languages = { "vue" },
+            },
+        },
+    },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
 }
 
 -- Angular bindings
