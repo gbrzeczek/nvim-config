@@ -29,7 +29,7 @@ vim.cmd('syntax on')
 vim.cmd([[
 call plug#begin()
 Plug 'github/copilot.vim'
-Plug 'tiagovla/tokyodark.nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -57,7 +57,7 @@ call plug#end()
 ]])
 
 -- Set colorscheme
-vim.cmd('colorscheme tokyodark')
+vim.cmd('colorscheme catppuccin')
 
 -- Keybindings
 local map = vim.api.nvim_set_keymap
