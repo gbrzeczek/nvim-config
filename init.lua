@@ -28,7 +28,6 @@ vim.cmd('syntax on')
 -- Plugin management with vim-plug
 vim.cmd([[
 call plug#begin()
-Plug 'github/copilot.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
