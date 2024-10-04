@@ -58,6 +58,10 @@ call plug#end()
 -- Set colorscheme
 vim.cmd('colorscheme catppuccin')
 
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Keybindings
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
