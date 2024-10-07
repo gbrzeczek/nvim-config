@@ -154,6 +154,7 @@ local on_attach = function(client, bufnr)
   -- Diagnostics
   buf_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', '<leader>ds', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 
   -- Inlay hints
   vim.keymap.set('n', '<leader>th', function()
