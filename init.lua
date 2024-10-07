@@ -73,7 +73,7 @@ map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
 
 -- Neotree binding
-map('n', '<Leader>n', ':Neotree toggle<CR>', opts)
+map('n', '<Leader>n', ':Neotree position=float toggle<CR>', opts)
 
 -- Setup lualine
 require('lualine').setup {}
